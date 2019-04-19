@@ -1,3 +1,4 @@
+using AspNetCoreAngularDemo.Interfaces;
 using AspNetCoreAngularDemo.Models;
 using AspNetCoreAngularDemo.Persistence;
 using Microsoft.AspNetCore.Mvc;
@@ -8,17 +9,17 @@ namespace AspNetCoreAngularDemo.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly AuthRepository _authRepository;
+        private readonly IAuthRepository repository;
 
-        public AuthController(AuthRepository authRepository)
+        public AuthController(IAuthRepository repository)
         {
-            _authRepository = authRepository;
+            this.repository = repository;
         }
 
         [HttpPost]
         public ActionResult<string> Authenticate(User user)
         {
-            object token = _authRepository.Authenticate(user.Username, user.Password);
+            object token = repository.Authenticate(user.Username, user.Password);
             if (token == null)
             {
                 return BadRequest("Invalid username and password");

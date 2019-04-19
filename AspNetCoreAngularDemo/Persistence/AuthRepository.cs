@@ -7,10 +7,11 @@ using AspNetCoreAngularDemo.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using AspNetCoreAngularDemo.Interfaces;
 
 namespace AspNetCoreAngularDemo.Persistence
 {
-    public class AuthRepository
+    public class AuthRepository: IAuthRepository
     {
         private readonly AppSettings appSettings;
         private readonly DemoDbContext context;

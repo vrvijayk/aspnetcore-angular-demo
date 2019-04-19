@@ -9,6 +9,7 @@ namespace AspNetCoreAngularDemo.Interfaces
         Task<IEnumerable<Product>> GetAll();
         Task<Product> Get(int id);
         void Add(Product product);
+        void Update(Product product);
         void Remove(Product product);
     }
 }

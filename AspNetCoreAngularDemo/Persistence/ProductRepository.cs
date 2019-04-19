@@ -32,6 +32,11 @@ namespace AspNetCoreAngularDemo.Persistence
             context.Products.Add(product);
         }
 
+        public void Update(Product product)
+        {
+            context.Entry(product).State = EntityState.Modified;
+        }
+
         public void Remove(Product product)
         {
             context.Products.Remove(product);

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using AspNetCoreAngularDemo.Models;
 using AspNetCoreAngularDemo.Persistence;
-
+using AspNetCoreAngularDemo.Interfaces;
 
 namespace AspNetCoreAngularDemo.Controllers
 {
@@ -17,25 +17,28 @@ namespace AspNetCoreAngularDemo.Controllers
     [Authorize]
     public class ProductsController : ControllerBase
     {
-        private readonly DemoDbContext context;
+        private readonly IProductRepository repository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public ProductsController(DemoDbContext context)
+        public ProductsController(IProductRepository repository, IUnitOfWork unitOfWork)
         {
-            this.context = context;
+            this.repository = repository;
+            this.unitOfWork = unitOfWork;
         }
 
         // GET: api/Products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await context.Products.ToListAsync();
+            var result = await repository.GetAll();
+            return Ok(result);
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await context.Products.FindAsync(id);
+            var product = await repository.Get(id);
 
             if (product == null)
             {
@@ -54,15 +57,16 @@ namespace AspNetCoreAngularDemo.Controllers
                 return BadRequest();
             }
 
-            context.Entry(product).State = EntityState.Modified;
+            repository.Update(product);
 
             try
             {
-                await context.SaveChangesAsync();
+                await unitOfWork.CompleteAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                var dbProduct = await repository.Get(id);
+                if (dbProduct == null)
                 {
                     return NotFound();
                 }
@@ -79,8 +83,8 @@ namespace AspNetCoreAngularDemo.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
-            context.Products.Add(product);
-            await context.SaveChangesAsync();
+            repository.Add(product);
+            await unitOfWork.CompleteAsync();
 
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
@@ -89,21 +93,16 @@ namespace AspNetCoreAngularDemo.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
-            var product = await context.Products.FindAsync(id);
+            var product = await repository.Get(id);
             if (product == null)
             {
                 return NotFound();
             }
 
-            context.Products.Remove(product);
-            await context.SaveChangesAsync();
+            repository.Remove(product);
+            await unitOfWork.CompleteAsync();
 
             return product;
-        }
-
-        private bool ProductExists(int id)
-        {
-            return context.Products.Any(e => e.Id == id);
         }
     }
 }
