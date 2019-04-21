@@ -106,8 +106,8 @@ namespace AspNetCoreAngularDemo
                 if (env.IsDevelopment())
                 {
                     spa.Options.StartupTimeout = new System.TimeSpan(0, 0, 180);
-                    //spa.UseAngularCliServer(npmScript: "start");
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }
