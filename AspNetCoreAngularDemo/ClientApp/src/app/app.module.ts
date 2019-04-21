@@ -7,8 +7,6 @@ import { RouterModule } from "@angular/router";
 import { AppComponent } from "./app.component";
 import { NavMenuComponent } from "./nav-menu/nav-menu.component";
 import { HomeComponent } from "./home/home.component";
-import { CounterComponent } from "./counter/counter.component";
-import { FetchDataComponent } from "./fetch-data/fetch-data.component";
 import { ProductFormComponent } from "./product-form/product-form.component";
 import { ProductListComponent } from "./product-list/product-list.component";
 import { AuthGuard } from "./auth.guard";
@@ -25,8 +23,6 @@ import { PaginationComponent } from './pagination/pagination.component';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
     ProductFormComponent,
     ProductListComponent,
     LoginComponent,
@@ -41,7 +37,6 @@ import { PaginationComponent } from './pagination/pagination.component';
     RouterModule.forRoot([
       { path: "", component: HomeComponent, pathMatch: "full" },
       { path: "login", component: LoginComponent },
-      { path: "fetch-data", component: FetchDataComponent },
       {
         path: "products/create",
         component: ProductFormComponent,

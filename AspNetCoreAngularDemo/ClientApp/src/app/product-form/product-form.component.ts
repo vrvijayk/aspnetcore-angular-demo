@@ -25,12 +25,20 @@ export class ProductFormComponent implements OnInit {
   onSubmit(productForm) {
     if (this.id > 0) {
       this.productService.update(this.id, productForm.value).subscribe(data => {
-      }, error => console.log("error occured", error));
+        alert("Product updated successfully");
+      }, error => {
+        alert("error occured");
+        console.log("error occured", error)
+      });
     }
     else {
       this.productService.create(productForm.value).subscribe(data => {
+        alert("Product created successfully");
         productForm.reset();
-      }, error => console.log("error occured", error));
+      }, error => {
+        alert("error occured");
+        console.log("error occured", error)
+      });
     }
   }
 
