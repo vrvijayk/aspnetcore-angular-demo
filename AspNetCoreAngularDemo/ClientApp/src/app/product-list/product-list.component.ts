@@ -30,6 +30,8 @@ export class ProductListComponent implements OnInit {
     if (window.confirm("Are you sure, you want to delete?")) {
       this.productService.delete(id).subscribe(data => {
         this.products = this.products.filter(p => p["id"] !== id);
+        this.reloadPagination = false;
+        this.getProducts();
       });
     }
   }

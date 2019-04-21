@@ -14,6 +14,7 @@
           [(ngModel)]="product.name"
           #name="ngModel"
           required
+          maxlength="100"
           placeholder="Enter name"
         />
         <div *ngIf="name.touched && name.invalid" class="alert alert-danger">
@@ -30,6 +31,7 @@
           [(ngModel)]="product.description"
           #description="ngModel"
           required
+          maxlength="200"
           placeholder="Enter Description"
         />
         <div
@@ -49,6 +51,7 @@
           [(ngModel)]="product.price"
           #price="ngModel"
           required
+          maxlength="10"
           placeholder="Enter Price"
         />
         <div *ngIf="price.touched && price.invalid" class="alert alert-danger">

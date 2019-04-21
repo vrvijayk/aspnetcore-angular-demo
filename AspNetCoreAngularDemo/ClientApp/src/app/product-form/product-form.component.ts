@@ -9,7 +9,7 @@ import { ProductService } from '../product.service';
   styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
-  product = {};
+  product: any = {id: 0};
   id = 0;
 
   constructor(private productService: ProductService, private route: ActivatedRoute) { }
@@ -19,7 +19,6 @@ export class ProductFormComponent implements OnInit {
     if (this.id) {
       this.productService.get(this.id).subscribe(data => this.product = data);
     }
-    
   }
 
   onSubmit(productForm) {
@@ -34,7 +33,7 @@ export class ProductFormComponent implements OnInit {
     else {
       this.productService.create(productForm.value).subscribe(data => {
         alert("Product created successfully");
-        productForm.reset();
+        productForm.reset({ id: 0 });
       }, error => {
         alert("error occured");
         console.log("error occured", error)
