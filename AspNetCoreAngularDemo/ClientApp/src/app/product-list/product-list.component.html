@@ -14,7 +14,8 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="mx-auto" *ngIf="products.length == 0">No records</div>
+<div class="row" *ngIf="products.length > 0">
   <div class="col-12">
     <table class="table">
       <thead>
@@ -35,9 +36,8 @@
             Price
             <i *ngIf="queryParams.sortBy == 'Price'" class="fa" [class.fa-sort-asc]="queryParams.sortAscending" [class.fa-sort-desc]="!queryParams.sortAscending"></i>
           </th>
-          <th scope="col" (click)="onSort('Actions')">
+          <th scope="col">
             Actions
-            <i *ngIf="queryParams.sortBy == 'Actions'" class="fa" [class.fa-sort-asc]="queryParams.sortAscending" [class.fa-sort-desc]="!queryParams.sortAscending"></i>
           </th>
         </tr>
       </thead>
