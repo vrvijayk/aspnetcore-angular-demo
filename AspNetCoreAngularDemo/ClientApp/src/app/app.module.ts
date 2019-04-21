@@ -18,6 +18,7 @@ import { AppErrorHandler } from "./app.error-handler";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { AuthorizeGuard } from "./authorize.guard";
 import { NotAuthorizedComponent } from "./not-authorized/not-authorized.component";
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NotAuthorizedComponent } from "./not-authorized/not-authorized.componen
     ProductListComponent,
     LoginComponent,
     NotFoundComponent,
-    NotAuthorizedComponent
+    NotAuthorizedComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),

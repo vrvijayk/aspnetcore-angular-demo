@@ -19,6 +19,10 @@ export class ProductService {
     return this.http.get(this.apiUrl);
   }
 
+  getByParams(params) {
+    return this.http.get(this.apiUrl, { params: params })
+  }
+
   get(id) {
     return this.http.get(this.apiUrl + "/" + id);
   }

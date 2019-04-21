@@ -14,7 +14,7 @@ namespace AspNetCoreAngularDemo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles ="Admin, AppUser")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository repository;
@@ -27,10 +27,17 @@ namespace AspNetCoreAngularDemo.Controllers
         }
 
         // GET: api/Products
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        //{
+        //    var result = await repository.GetAll();
+        //    return Ok(result);
+        //}
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<QueryResult<Product>>> GetProducts([FromQuery]ProductQuery queryParams)
         {
-            var result = await repository.GetAll();
+            var result = await repository.GetAll(queryParams);
             return Ok(result);
         }
 
@@ -81,6 +88,7 @@ namespace AspNetCoreAngularDemo.Controllers
 
         // POST: api/Products
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
             repository.Add(product);
@@ -91,6 +99,7 @@ namespace AspNetCoreAngularDemo.Controllers
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
             var product = await repository.Get(id);
